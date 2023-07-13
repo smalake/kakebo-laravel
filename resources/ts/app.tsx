@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { TopPage } from "./components/TopPage";
-import { PostPage } from "./components/PostPage";
+import { Register } from "./components/Auth/Register";
+import { Login } from "./components/Auth/Login";
 
 const App = () => {
     const title: string = "Hello TypeScript React";
@@ -11,16 +12,9 @@ const App = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<TopPage />} />
-                    <Route path="/posts" element={<PostPage />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                 </Routes>
-                <ul>
-                    <li>
-                        <Link to="/">Top</Link>
-                    </li>
-                    <li>
-                        <Link to="/posts">Post</Link>
-                    </li>
-                </ul>
             </BrowserRouter>
         </div>
     );
