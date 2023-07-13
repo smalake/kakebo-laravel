@@ -3,11 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,18 +26,14 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:20'],
-            'uid' => ['required', Rule::unique('users')->ignore($this->user->uid ?? null)],
+            'uid' => ['required'],
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => '表示名は必須です',
-            'name.max' => '表示名は20文字以内である必要があります',
             'uid.required' => 'UIDは必須です',
-            'uid.unique' => 'すでに登録済みのユーザーです',
         ];
     }
 
