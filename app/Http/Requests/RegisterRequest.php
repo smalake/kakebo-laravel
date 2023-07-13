@@ -26,11 +26,9 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-        // TODO: 今のフォームに合わせて修正が必要
         return [
-            'username' => ['required', 'min:8', Rule::unique('users')->ignore($this->user->id ?? null)],
-            'email' => ['required', 'email', Rule::unique('users')->ignore($this->user->id ?? null)],
-            'password' => ['required', 'min:8']
+            'name' => ['required', 'max:20'],
+            'uid' => ['required', Rule::unique('users')->ignore($this->user->id ?? null)],
         ];
     }
 
@@ -38,14 +36,10 @@ class RegisterRequest extends FormRequest
     {
         // TODO: 今のフォームに合わせて修正が必要
         return [
-            'username.required' => 'ユーザ名は8文字以上である必要があります',
-            'username.min' => 'ユーザ名は8文字以上である必要があります',
-            'username.unique' => 'このユーザ名はすでに使われています',
-            'email.required' => 'メールアドレスは入力する必要があります',
-            'email.email' => 'メールアドレスが不正です',
-            'email.unique' => 'このメールアドレスはすでに使われています',
-            'password.min' => 'パスワードは8文字以上である必要があります',
-            'password.min' => 'パスワードは8文字以上である必要があります',
+            'name.required' => '表示名は必須です',
+            'name.max' => '表示名は20文字以内である必要があります',
+            'uid.required' => 'UIDは必須です',
+            'uid.unique' => 'すでに登録済みのユーザーです',
         ];
     }
 

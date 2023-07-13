@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Http\Request;
 use \Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +15,7 @@ class RegisterController extends Controller
     {
         $user = User::create([
             'uid' => $request->uid,
-            'group_id' => $request->group_id,
+            'group_id' => 0,
             'name' => $request->name,
             'type' => $request->type,
         ]);

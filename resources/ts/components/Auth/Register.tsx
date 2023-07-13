@@ -36,7 +36,7 @@ export const Register = () => {
             const uid = userCredential.user.uid;
             // DBに新規登録
             const registerData = { uid: uid, name: data.name, type: 1 };
-            apiRegister(JSON.stringify(registerData), token);
+            apiRegister(registerData, token);
         } catch (err: unknown) {
             if (err instanceof FirebaseError) {
                 if (err.code === "auth/email-already-in-use") {
@@ -57,7 +57,7 @@ export const Register = () => {
             const { uid, token, name } = await googleLogin();
             if (token !== undefined) {
                 const registerData = { uid: uid, name: name, type: 2 };
-                apiRegister(JSON.stringify(registerData), token);
+                apiRegister(registerData, token);
             }
         } catch (err) {
             if (err instanceof FirebaseError) {
@@ -74,10 +74,9 @@ export const Register = () => {
     };
 
     //APIサーバへのユーザ新規登録処理
-    const apiRegister = async (data: string, token: string) => {
+    const apiRegister = async (data: object, token: string) => {
         try {
             const res = await authApi.register(data);
-            console.log(res);
             if (res.status === 200) {
                 const now = new Date();
                 setCookie("kakebo", token, {
