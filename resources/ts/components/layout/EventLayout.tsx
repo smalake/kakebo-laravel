@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { eventAtom } from "@/recoil/EventAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { eventApi } from "@/api/eventApi";
-import { checkAtom } from "../../recoil/CheckAtom";
+import { checkAtom } from "@/recoil/CheckAtom";
 import { categoryAtom } from "@/recoil/CategoryAtom";
 import { Colors, Graph, GraphData, OneEvent, TotalData } from "@/types";
 import { GraphDataContext } from "@/util/context";
