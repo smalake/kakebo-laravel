@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'app_name') }}</title>
     @viteReactRefresh
-    @vite('resources/ts/app.tsx')
+    @vite(['resources/ts/app.tsx', 'resources/css/app.css'])
 </head>
 
 <body>
