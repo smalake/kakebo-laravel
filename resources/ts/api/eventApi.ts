@@ -1,5 +1,5 @@
 import { EventID } from "../types";
-import { axiosClient } from "./axiosClient";
+import { axiosClient } from "./axiosClientProvider";
 
 export const eventApi = {
     getAll: () => axiosClient.get("/events"),

@@ -18,7 +18,11 @@ class Firebase
     {
         $auth = app('firebase.auth');
         try {
-            $verifiedIdToken = $auth->verifyIdToken($request);
+            $token = $request->bearerToken();
+            $verifiedIdToken = $auth->verifyIdToken($token);
+            $uid = $verifiedIdToken->claims()->get('sub');
+
+            $request->merge(['uid' => $uid]);
         } catch (\InvalidArgumentException $e) {
             return $e->getMessage();
         } catch (InvalidToken $e) {
