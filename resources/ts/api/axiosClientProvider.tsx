@@ -18,7 +18,7 @@ type Props = {
 export const AxiosClientProvider = (props: Props) => {
     const { children } = props;
     const navigate = useNavigate();
-    const [cookie, setCookie] = useCookies(["kakebo"]);
+    const [cookie, setCookie] = useCookies();
 
     useEffect(() => {
         console.log(cookie);

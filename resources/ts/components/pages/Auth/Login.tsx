@@ -15,7 +15,7 @@ import { LoginForm } from "@/types";
 
 export const Login = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies();
+    const [cookies, setCookie, removeCookie] = useCookies();
 
     // react-hook-formの設定
     const {
@@ -32,7 +32,7 @@ export const Login = () => {
                 data.email,
                 data.password
             );
-            const token = await userCredential.user.getIdToken(); // トークンを取得
+            const token = await userCredential.user.getIdToken(true); // トークンを取得
             const uid = userCredential.user.uid;
 
             // TODO: Recoilにトークンを登録
@@ -76,6 +76,7 @@ export const Login = () => {
         try {
             const res = await authApi.login(data);
             if (res.status === 200) {
+                removeCookie("kakebo");
                 setCookie("kakebo", token); // トークンをCookieにセット
                 navigate("/event-register");
             } else {

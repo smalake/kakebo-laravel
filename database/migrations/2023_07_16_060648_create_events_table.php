@@ -21,7 +21,7 @@ return new class extends Migration
             // $table->foreign('update_user')->references('uid')->on('users')->onUpdate('RESTRICT')->onDelete('RESTRICT');
             $table->integer('category');
             $table->integer('amount');
-            $table->date('date');
+            $table->string('date');
             $table->string('store_name')->nullable();
             $table->integer('group_id');
             // $table->foreign('group_id')->references('id')->on('groups')->onUpdate('RESTRICT')->onDelete('RESTRICT');

@@ -32,7 +32,7 @@ export const Register = () => {
                 data.email,
                 data.password
             );
-            const token = await userCredential.user.getIdToken(); // トークンを取得
+            const token = await userCredential.user.getIdToken(true); // トークンを取得
             const uid = userCredential.user.uid;
             // DBに新規登録
             const registerData = { uid: uid, name: data.name, type: 1 };
@@ -79,6 +79,7 @@ export const Register = () => {
             const res = await authApi.register(data);
             if (res.status === 200) {
                 const now = new Date();
+                removeCookie("kakebo");
                 setCookie("kakebo", token, {
                     expires: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000),
                 }); // トークンをCookieにセット（有効期限1週間）

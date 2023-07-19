@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class Firebase
 {
@@ -23,11 +24,11 @@ class Firebase
             $uid = $verifiedIdToken->claims()->get('sub');
 
             $request->merge(['uid' => $uid]);
+            return $next($request);
         } catch (\InvalidArgumentException $e) {
             return $e->getMessage();
         } catch (InvalidToken $e) {
             return $e->getMessage();
         }
-        return $next($request);
     }
 }

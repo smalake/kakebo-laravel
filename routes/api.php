@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,13 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['api', 'cors']], function () {
-    Route::options('articles', function () {
-        return response()->json();
-    });
-    Route::resource('articles', 'Api\ArticlesController');
-});
-
-// Route::middleware('firebase')->get('register', [◯◯Controller::class, '関数名']);
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [LoginController::class, 'login']);
+// Route::middleware('firebase')->get('register', [◯◯Controller::class, '関数名']);
+
+// event用
+Route::group(['middleware' => ['firebase']], function () {
+    Route::post('events', [EventController::class, 'create']);
+});
