@@ -23,4 +23,5 @@ Route::post('login', [LoginController::class, 'login']);
 // event用
 Route::group(['middleware' => ['firebase']], function () {
     Route::post('events', [EventController::class, 'create']);
+    Route::put('events', [EventController::class, 'update']);
 });

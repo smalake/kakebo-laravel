@@ -11,9 +11,9 @@ use \Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
 {
+    // イベントの新規登録
     public function create(Request $request)
     {
-
         try {
             DB::beginTransaction();
 
@@ -52,6 +52,35 @@ class EventController extends Controller
             DB::rollBack();
             $json = [
                 'message' => 'Failed Insert to Event',
+                'error' => $e->getMessage()
+            ];
+            return response()->json($json, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // イベントの更新
+    public function update(Request $request)
+    {
+        try {
+            DB::transaction();
+
+            Event::where('id', $request->id)->update([
+                'category' => $request->category,
+                'amount' => $request->amount,
+                'store_name' => $request->storeName,
+                'update_user' => $request->input('uid')
+            ]);
+            DB::commit();
+
+            $json = [
+                'message' => 'Event update success!',
+                'error' => ''
+            ];
+            return response()->json($json, Response::HTTP_OK);
+        } catch (Error $e) {
+            DB::rollBack();
+            $json = [
+                'message' => 'Failed Update to Event',
                 'error' => $e->getMessage()
             ];
             return response()->json($json, Response::HTTP_INTERNAL_SERVER_ERROR);
