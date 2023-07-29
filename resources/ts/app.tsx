@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { CookiesProvider } from "react-cookie";
 import { RecoilRoot } from "recoil";
@@ -21,7 +21,7 @@ import { Start } from "./components/pages/Setup/Start";
 import { Select } from "./components/pages/Setup/Select";
 import { Create } from "./components/pages/Setup/Create";
 import { CreateOK } from "./components/pages/Setup/CreateOK";
-import { AxiosClientProvider } from "./api/axiosClientProvider";
+// import { AxiosClientProvider } from "./api/axiosClientProvider";
 
 const App = () => {
     return (
@@ -29,68 +29,62 @@ const App = () => {
             <RecoilRoot>
                 <CookiesProvider>
                     <BrowserRouter>
-                        <AxiosClientProvider>
-                            <Routes>
-                                <Route path="/" element={<AuthLayout />}>
-                                    <Route index element={<Login />} />
-                                    <Route path="login" element={<Login />} />
+                        {/* <AxiosClientProvider> */}
+                        <Routes>
+                            <Route path="/" element={<AuthLayout />}>
+                                <Route index element={<Login />} />
+                                <Route path="login" element={<Login />} />
+                                <Route path="register" element={<Register />} />
+                            </Route>
+                            <Route path="/" element={<SetupCheck />}>
+                                <Route path="/" element={<NoMenuLayout />}>
                                     <Route
-                                        path="register"
-                                        element={<Register />}
+                                        path="event-edit/:id"
+                                        element={<EventEdit />}
+                                    />
+                                    <Route
+                                        path="change-name"
+                                        element={<ChangeName />}
                                     />
                                 </Route>
-                                <Route path="/" element={<SetupCheck />}>
-                                    <Route path="/" element={<NoMenuLayout />}>
+                                <Route path="/" element={<MenuLayout />}>
+                                    <Route
+                                        path="event-register"
+                                        element={<EventRegister />}
+                                    />
+                                    <Route path="/" element={<EventLayout />}>
                                         <Route
-                                            path="event-edit/:id"
-                                            element={<EventEdit />}
+                                            path="calendar"
+                                            element={<Calendar />}
                                         />
                                         <Route
-                                            path="change-name"
-                                            element={<ChangeName />}
+                                            path="graph"
+                                            element={<Graph />}
                                         />
                                     </Route>
-                                    <Route path="/" element={<MenuLayout />}>
-                                        <Route
-                                            path="event-register"
-                                            element={<EventRegister />}
-                                        />
-                                        <Route
-                                            path="/"
-                                            element={<EventLayout />}
-                                        >
-                                            <Route
-                                                path="calendar"
-                                                element={<Calendar />}
-                                            />
-                                            <Route
-                                                path="graph"
-                                                element={<Graph />}
-                                            />
-                                        </Route>
-                                        <Route
-                                            path="setting"
-                                            element={<Setting />}
-                                        />
-                                    </Route>
-                                </Route>
-                                <Route path="/" element={<Setup />}>
-                                    <Route path="setup" element={<Start />} />
                                     <Route
-                                        path="setup-select"
-                                        element={<Select />}
-                                    />
-                                    <Route
-                                        path="setup-create"
-                                        element={<Create />}
-                                    />
-                                    <Route
-                                        path="setup-complete"
-                                        element={<CreateOK />}
+                                        path="setting"
+                                        element={<Setting />}
                                     />
                                 </Route>
-                            </Routes>
-                        </AxiosClientProvider>
+                            </Route>
+                            <Route path="/" element={<Setup />}>
+                                <Route path="setup" element={<Start />} />
+                                <Route
+                                    path="setup-select"
+                                    element={<Select />}
+                                />
+                                <Route
+                                    path="setup-create"
+                                    element={<Create />}
+                                />
+                                <Route
+                                    path="setup-complete"
+                                    element={<CreateOK />}
+                                />
+                            </Route>
+                        </Routes>
+                        {/* </AxiosClientProvider> */}
                     </BrowserRouter>
                 </CookiesProvider>
             </RecoilRoot>
