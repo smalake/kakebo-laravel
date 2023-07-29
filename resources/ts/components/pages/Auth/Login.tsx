@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/util/firebase";
 import styles from "./Auth.module.css";
-import { useCookies } from "react-cookie";
 import { authApi } from "@/api/authApi";
 import { googleLogin } from "@/util/googleLogin";
 import { FirebaseError } from "firebase/app";
@@ -15,7 +14,6 @@ import { LoginForm } from "@/types";
 
 export const Login = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie, removeCookie] = useCookies();
 
     // react-hook-formの設定
     const {
@@ -76,8 +74,7 @@ export const Login = () => {
         try {
             const res = await authApi.login(data);
             if (res.status === 200) {
-                removeCookie("kakebo");
-                setCookie("kakebo", token); // トークンをCookieにセット
+                localStorage.setItem("kakebo", token);
                 navigate("/event-register");
             } else {
                 console.log(res);

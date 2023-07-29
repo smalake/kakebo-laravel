@@ -7,7 +7,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/util/firebase";
 import styles from "./Auth.module.css";
 import { FirebaseError } from "firebase/app";
-import { useCookies } from "react-cookie";
 import { authApi } from "@/api/authApi";
 import { googleLogin } from "@/util/googleLogin";
 import { Button, TextField } from "@mui/material";
@@ -15,7 +14,6 @@ import { RegisterForm } from "@/types";
 
 export const Register = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie, removeCookie] = useCookies();
 
     // react-hook-formの設定
     const {
@@ -78,11 +76,7 @@ export const Register = () => {
         try {
             const res = await authApi.register(data);
             if (res.status === 200) {
-                const now = new Date();
-                removeCookie("kakebo");
-                setCookie("kakebo", token, {
-                    expires: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000),
-                }); // トークンをCookieにセット（有効期限1週間）
+                localStorage.setItem("kakebo", token);
                 navigate("/event-register");
             } else {
                 alert("新規登録に失敗しました");
