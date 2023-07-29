@@ -3,6 +3,7 @@
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SetupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,4 +25,10 @@ Route::post('login', [LoginController::class, 'login']);
 Route::group(['middleware' => ['firebase']], function () {
     Route::post('events', [EventController::class, 'create']);
     Route::put('events', [EventController::class, 'update']);
+});
+
+// 初期セットアップ用
+Route::group(['middleware' => ['firebase']], function () {
+    Route::post('setup', [SetupController::class, 'create']);
+    Route::get('setup', [SetupController::class, 'get']);
 });
