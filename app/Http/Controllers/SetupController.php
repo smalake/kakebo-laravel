@@ -49,6 +49,7 @@ class SetupController extends Controller
             User::where('uid', $uid)->update([
                 'group_id' => $group->id,
             ]);
+            DB::commit();
 
             $json = [
                 'data' => $group->id,
@@ -57,6 +58,7 @@ class SetupController extends Controller
             ];
             return response()->json($json, Response::HTTP_OK);
         } catch (Error $e) {
+            DB::rollBack();
             $json = [
                 'message' => 'Failed Create to Group',
                 'error' => $e->getMessage()
