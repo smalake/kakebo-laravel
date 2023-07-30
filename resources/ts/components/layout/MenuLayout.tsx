@@ -7,7 +7,7 @@ export const MenuLayout = () => {
     const navigate = useNavigate();
     // const [cookie, setCookie] = useCookies();
 
-    const checkCookie = () => {
+    const checkToken = () => {
         if (localStorage.getItem("kakebo")) {
             return localStorage.getItem("kakebo");
         } else {
@@ -18,7 +18,7 @@ export const MenuLayout = () => {
 
     return (
         <>
-            {checkCookie() ? (
+            {checkToken() ? (
                 <Box
                     sx={{
                         display: "flex",
