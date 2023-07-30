@@ -3,14 +3,22 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { setupApi } from "@/api/setupApi";
 import styles from "./Setup.module.css";
+import { useRecoilState } from "recoil";
+import { checkAtom } from "@/recoil/CheckAtom";
 
 export const Create = () => {
     const navigate = useNavigate();
+    const [check, setCheck] = useRecoilState(checkAtom);
     const setup = async () => {
         try {
             // 家計簿を作成する
             const res = await setupApi.create();
             if (res.status === 200) {
+                // Atomに保存
+                setCheck((prevCheck) => ({
+                    ...prevCheck,
+                    setup: Number(res.data.data),
+                }));
                 navigate("/setup-complete");
             } else {
                 alert(
