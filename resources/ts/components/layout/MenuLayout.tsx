@@ -1,10 +1,8 @@
 import { Box } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { Outlet, useNavigate, Navigate } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import { FooterMenu } from "./FooterMenu";
 
 export const MenuLayout = () => {
-    const navigate = useNavigate();
     // const [cookie, setCookie] = useCookies();
 
     const checkToken = () => {
