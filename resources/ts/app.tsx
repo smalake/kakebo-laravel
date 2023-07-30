@@ -16,7 +16,6 @@ import { Calendar } from "./components/pages/Calendar";
 import { Graph } from "./components/pages/Graph";
 import { ChangeName } from "./components/pages/Setting/ChangeName";
 import { Setting } from "./components/pages/Setting/Setting";
-import { Setup } from "./components/layout/Setup";
 import { Start } from "./components/pages/Setup/Start";
 import { Select } from "./components/pages/Setup/Select";
 import { Create } from "./components/pages/Setup/Create";
@@ -68,7 +67,7 @@ const App = () => {
                                     />
                                 </Route>
                             </Route>
-                            <Route path="/" element={<Setup />}>
+                            <Route path="/" element={<NoMenuLayout />}>
                                 <Route path="setup" element={<Start />} />
                                 <Route
                                     path="setup-select"
