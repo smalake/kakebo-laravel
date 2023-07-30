@@ -46,6 +46,7 @@ export const Create = () => {
                     flexDirection: "column",
                     width: "90%",
                     alignItems: "center",
+                    margin: "auto",
                 }}
             >
                 <Box

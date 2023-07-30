@@ -8,7 +8,12 @@ export const Select = () => {
     return (
         <div className={styles.container}>
             <Box
-                sx={{ display: "flex", flexDirection: "column", width: "60%" }}
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "60%",
+                    margin: "0 auto",
+                }}
             >
                 <Button
                     variant="contained"
