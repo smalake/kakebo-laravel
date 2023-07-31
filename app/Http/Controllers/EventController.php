@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\User;
+use Carbon\Carbon;
 use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use \Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
@@ -24,7 +26,7 @@ class EventController extends Controller
             Event::create([
                 'amount' => $request->amount1,
                 'category' => $request->category1,
-                'store_name' => $request->store_name,
+                'store_name' => $request->storeName,
                 'date' => $request->date,
                 'create_user' => $uid,
                 'update_user' => $uid,
@@ -85,5 +87,56 @@ class EventController extends Controller
             ];
             return response()->json($json, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // 全イベントを取得
+    public function get_all(Request $request)
+    {
+        try {
+            // UIDからグループIDを取得
+            $uid = $request->input('uid');
+            $data = User::where('uid', $uid)->first();
+
+            $data = Event::where('group_id', $data['group_id'])->get();
+            // 取得したイベントを日付毎にグルーピング
+            $results = array();
+            foreach ($data as $item) {
+                $carbonDate = Carbon::parse($item->date);
+                $carbonCreated = Carbon::parse($item->created_at);
+                $carbonUpdated = Carbon::parse($item->updated_at);
+                $result = array(
+                    'amount' => $item->amount,
+                    'category' => $item->category,
+                    'storeName' => $item->store_name,
+                    'date' => $item->date,
+                    'createUser' => $item->create_user,
+                    'updateUser' => $item->update_user,
+                    'createdAt' => $carbonCreated->format('Y-m-d H:m:s'),
+                    'updatedAt' => $carbonUpdated->format('Y-m-d H:m:s'),
+                );
+                if (isset($results[$carbonDate->format('Y-m-d')])) {
+                    array_push($results[$carbonDate->format('Y-m-d')], $result);
+                } else {
+                    $results[$carbonDate->format('Y-m-d')][0] = $result;
+                }
+            }
+            $json = [
+                'data' => $data,
+                'message' => 'All Event Get success!',
+                'error' => ''
+            ];
+            return response()->json($json, Response::HTTP_OK);
+        } catch (Error $e) {
+            $json = [
+                'message' => 'Failed Get to Event',
+                'error' => $e->getMessage()
+            ];
+            return response()->json($json, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // 全イベントを取得
+    public function get_one(Request $request, $id)
+    {
     }
 }
