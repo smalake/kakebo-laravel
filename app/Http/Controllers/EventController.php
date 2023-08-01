@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use \Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
