@@ -121,7 +121,7 @@ class EventController extends Controller
                 }
             }
             $json = [
-                'data' => $data,
+                'data' => $results,
                 'message' => 'All Event Get success!',
                 'error' => ''
             ];
