@@ -171,4 +171,23 @@ class EventController extends Controller
             return response()->json($json, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    // 指定したイベントを削除
+    public function delete(Request $request)
+    {
+        try {
+            Event::destroy($request->id);
+            $json = [
+                'message' => 'Event Delete success!',
+                'error' => ''
+            ];
+            return response()->json($json, Response::HTTP_OK);
+        } catch (Error $e) {
+            $json = [
+                'message' => 'Failed Delete to Event',
+                'error' => $e->getMessage()
+            ];
+            return response()->json($json, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }

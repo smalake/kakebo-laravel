@@ -27,6 +27,7 @@ Route::group(['middleware' => ['firebase']], function () {
     Route::put('events', [EventController::class, 'update']);
     Route::get('events', [EventController::class, 'get_all']);
     Route::get('events/{id}', [EventController::class, 'get_one']);
+    Route::delete('events', [EventController::class, 'delete']);
 });
 
 // 初期セットアップ用
