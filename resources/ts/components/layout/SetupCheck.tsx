@@ -14,8 +14,7 @@ export const SetupCheck = () => {
                 try {
                     // グループ情報を取得
                     const res = await setupApi.get();
-                    console.log(res);
-                    const groupId = Number(res.data["groupId"]);
+                    const groupId = Number(res.data.data);
                     // グループIDが0以下の場合はセットアップ未完了（未完了の場合は0か-1が返ってくる）
                     if (groupId <= 0) {
                         // セットアップ画面へ

@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->id();
-            $table->string('uid')->unique();
-            $table->unsignedInteger('group_id')->nullable();
-            // $table->foreign('group_id')->references('id')->on('groups')->onUpdate('RESTRICT')->onDelete('RESTRICT');
-            $table->string('name');
-            $table->integer('type');
+            $table->string('manage_uid')->nullable();
+            // $table->foreign('manage_uid')->references('uid')->on('users')->onUpdate('RESTRICT')->onDelete('RESTRICT');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('groups');
     }
 };

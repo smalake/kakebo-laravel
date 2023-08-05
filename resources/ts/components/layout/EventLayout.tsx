@@ -28,7 +28,7 @@ export const EventLayout = () => {
     const getEvents = async () => {
         try {
             const res = await eventApi.getAll();
-            setEvents(res.data);
+            setEvents(res.data.data);
             setCheck({
                 ...check,
                 calendar: 1,
@@ -40,8 +40,8 @@ export const EventLayout = () => {
                 template[index] = { name: value.name, value: 0, category: 9 };
             });
 
-            for (var date in res.data) {
-                const transactions = res.data[date];
+            for (var date in res.data.data) {
+                const transactions = res.data.data[date];
                 date = date.slice(0, -3);
                 let sum = 0;
                 transactions.forEach((transaction: OneEvent) => {
@@ -65,7 +65,7 @@ export const EventLayout = () => {
                 alert("認証エラー\n再ログインしてください");
                 navigate("/login");
             } else {
-                alert("登録に失敗しました");
+                alert("一覧の取得に失敗しました");
                 console.log(err);
             }
         }

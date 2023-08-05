@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom";
 import { CookiesProvider } from "react-cookie";
 import { RecoilRoot } from "recoil";
@@ -16,11 +16,11 @@ import { Calendar } from "./components/pages/Calendar";
 import { Graph } from "./components/pages/Graph";
 import { ChangeName } from "./components/pages/Setting/ChangeName";
 import { Setting } from "./components/pages/Setting/Setting";
-import { Setup } from "./components/layout/Setup";
 import { Start } from "./components/pages/Setup/Start";
 import { Select } from "./components/pages/Setup/Select";
 import { Create } from "./components/pages/Setup/Create";
 import { CreateOK } from "./components/pages/Setup/CreateOK";
+// import { AxiosClientProvider } from "./api/axiosClientProvider";
 
 const App = () => {
     return (
@@ -28,6 +28,7 @@ const App = () => {
             <RecoilRoot>
                 <CookiesProvider>
                     <BrowserRouter>
+                        {/* <AxiosClientProvider> */}
                         <Routes>
                             <Route path="/" element={<AuthLayout />}>
                                 <Route index element={<Login />} />
@@ -66,7 +67,7 @@ const App = () => {
                                     />
                                 </Route>
                             </Route>
-                            <Route path="/" element={<Setup />}>
+                            <Route path="/" element={<NoMenuLayout />}>
                                 <Route path="setup" element={<Start />} />
                                 <Route
                                     path="setup-select"
@@ -82,6 +83,7 @@ const App = () => {
                                 />
                             </Route>
                         </Routes>
+                        {/* </AxiosClientProvider> */}
                     </BrowserRouter>
                 </CookiesProvider>
             </RecoilRoot>

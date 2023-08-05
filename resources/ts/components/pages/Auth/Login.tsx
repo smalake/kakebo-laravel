@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/util/firebase";
 import styles from "./Auth.module.css";
-import { useCookies } from "react-cookie";
 import { authApi } from "@/api/authApi";
 import { googleLogin } from "@/util/googleLogin";
 import { FirebaseError } from "firebase/app";
@@ -15,7 +14,6 @@ import { LoginForm } from "@/types";
 
 export const Login = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies();
 
     // react-hook-formの設定
     const {
@@ -32,7 +30,7 @@ export const Login = () => {
                 data.email,
                 data.password
             );
-            const token = await userCredential.user.getIdToken(); // トークンを取得
+            const token = await userCredential.user.getIdToken(true); // トークンを取得
             const uid = userCredential.user.uid;
 
             // TODO: Recoilにトークンを登録
@@ -76,7 +74,7 @@ export const Login = () => {
         try {
             const res = await authApi.login(data);
             if (res.status === 200) {
-                setCookie("kakebo", token); // トークンをCookieにセット
+                localStorage.setItem("kakebo", token);
                 navigate("/event-register");
             } else {
                 console.log(res);
