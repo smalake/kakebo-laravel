@@ -140,7 +140,11 @@ class EventController extends Controller
     public function get_one($id)
     {
         try {
-            $data = Event::where('id', $id)->first();
+            $data = Event::select('events.amount', 'events.category', 'events.store_name', 'events.date', 'events.created_at', 'events.updated_at', 'users1.name as create_user', 'users2.name as update_user')
+                ->leftJoin('users as users1', 'events.create_user', '=', 'users1.uid')
+                ->leftJoin('users as users2', 'events.update_user', '=', 'users2.uid')
+                ->where('events.id', $id)
+                ->first();
             $carbonCreated = Carbon::parse($data->created_at);
             $carbonUpdated = Carbon::parse($data->updated_at);
             $result = array(
