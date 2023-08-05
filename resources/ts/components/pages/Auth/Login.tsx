@@ -1,63 +1,59 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerValidation } from "@/util/validation";
+import { loginValidation } from "@/util/validation";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/util/firebase";
 import styles from "./Auth.module.css";
-import { FirebaseError } from "firebase/app";
-import { useCookies } from "react-cookie";
 import { authApi } from "@/api/authApi";
 import { googleLogin } from "@/util/googleLogin";
+import { FirebaseError } from "firebase/app";
 import { Button, TextField } from "@mui/material";
-import { RegisterForm } from "@/types";
+import { LoginForm } from "@/types";
 
-export const Register = () => {
+export const Login = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie, removeCookie] = useCookies();
 
     // react-hook-formの設定
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<RegisterForm>({ resolver: zodResolver(registerValidation) });
+    } = useForm<LoginForm>({ resolver: zodResolver(loginValidation) });
 
-    // メールアドレスで新規登録ボタンが押されたときの処理
-    const onSubmit = async (data: RegisterForm) => {
+    // メールアドレスでログインボタンが押されたときの処理
+    const onSubmit = async (data: LoginForm) => {
         try {
-            const userCredential = await createUserWithEmailAndPassword(
+            const userCredential = await signInWithEmailAndPassword(
                 auth,
                 data.email,
                 data.password
             );
-            const token = await userCredential.user.getIdToken(); // トークンを取得
+            const token = await userCredential.user.getIdToken(true); // トークンを取得
             const uid = userCredential.user.uid;
-            // DBに新規登録
-            const registerData = { uid: uid, name: data.name, type: 1 };
-            apiRegister(registerData, token);
-        } catch (err: unknown) {
-            if (err instanceof FirebaseError) {
-                if (err.code === "auth/email-already-in-use") {
-                    alert("すでに使用されているメールアドレスです");
-                } else {
-                    alert(err);
-                }
-            } else {
-                alert(err);
-            }
+
+            // TODO: Recoilにトークンを登録
+            // ユーザ情報がAPIサーバに登録されているかチェック
+            const loginData = { uid: uid };
+            apiLogin(loginData, token);
+        } catch (err) {
+            console.log(err);
+            alert("メールアドレスかパスワードが間違っています");
         }
     };
 
     // Googleで新規登録ボタンが押されたときの処理
     const handleGoogle = async () => {
         try {
-            // googleアカウントにログインして登録を行う
-            const { uid, token, name } = await googleLogin();
+            const { uid, token } = await googleLogin();
             if (token !== undefined) {
-                const registerData = { uid: uid, name: name, type: 2 };
-                apiRegister(registerData, token);
+                const loginData = { uid: uid };
+                apiLogin(loginData, token);
+            } else {
+                alert(
+                    "認証エラーが発生しました\nアカウントが登録されていない、またはパスワードが間違っています"
+                );
             }
         } catch (err) {
             if (err instanceof FirebaseError) {
@@ -73,28 +69,30 @@ export const Register = () => {
         }
     };
 
-    //APIサーバへのユーザ新規登録処理
-    const apiRegister = async (data: object, token: string) => {
+    // APIサーバへのログイン処理
+    const apiLogin = async (data: object, token: string) => {
         try {
-            const res = await authApi.register(data);
+            const res = await authApi.login(data);
             if (res.status === 200) {
-                const now = new Date();
-                setCookie("kakebo", token, {
-                    expires: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000),
-                }); // トークンをCookieにセット（有効期限1週間）
+                localStorage.setItem("kakebo", token);
                 navigate("/event-register");
             } else {
-                alert("新規登録に失敗しました");
+                console.log(res);
+                alert(
+                    "認証エラーが発生しました\nアカウントが登録されていない、またはパスワードが間違っています"
+                );
             }
         } catch (err) {
-            alert("エラーが発生しました");
             console.log(err);
+            alert(
+                "認証エラーが発生しました\nアカウントが登録されていない、またはパスワードが間違っています"
+            );
         }
     };
 
     return (
         <div className={styles.container}>
-            <h2>新規登録フォーム</h2>
+            <h2>ログイン</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.form}>
                     <TextField
@@ -103,16 +101,6 @@ export const Register = () => {
                         {...register("email")}
                         error={Boolean(errors.email)}
                         helperText={errors.email?.message}
-                        sx={{ width: "90%" }}
-                    />
-                </div>
-                <div className={styles.form}>
-                    <TextField
-                        id="name"
-                        label="表示名"
-                        {...register("name")}
-                        error={Boolean(errors.name)}
-                        helperText={errors.name?.message}
                         sx={{ width: "90%" }}
                     />
                 </div>
@@ -128,17 +116,6 @@ export const Register = () => {
                     />
                 </div>
                 <div className={styles.form}>
-                    <TextField
-                        id="confirmPassword"
-                        label="確認用パスワード"
-                        type="password"
-                        {...register("confirmPassword")}
-                        error={Boolean(errors.confirmPassword)}
-                        helperText={errors.confirmPassword?.message}
-                        sx={{ width: "90%" }}
-                    />
-                </div>
-                <div className={styles.form}>
                     <Button
                         type="submit"
                         variant="contained"
@@ -150,19 +127,19 @@ export const Register = () => {
                             fontWeight: "bold",
                         }}
                     >
-                        メールアドレスで新規登録
+                        メールアドレスでログイン
                     </Button>
                 </div>
             </form>
             <p className={styles.subText}>または</p>
             <div className={styles.form}>
                 <button className={styles.google} onClick={handleGoogle}>
-                    Googleアカウントで新規登録
+                    Googleアカウントでログイン
                 </button>
             </div>
             <div style={{ marginLeft: "20px" }}>
-                <p className={styles.linkText}>アカウントをお持ちの方は</p>
-                <Link to="/login">ログイン</Link>
+                <p className={styles.linkText}>アカウントをお持ちでない方は</p>
+                <Link to="/register">新規登録</Link>
             </div>
         </div>
     );

@@ -7,6 +7,8 @@ export const axiosClient = axios.create({
 
 // APIを叩く前に前処理を行う
 axiosClient.interceptors.request.use(async (config: any) => {
+    const token = localStorage.getItem("kakebo");
+    config.headers.Authorization = `Bearer ${token}`;
     return config;
 });
 
