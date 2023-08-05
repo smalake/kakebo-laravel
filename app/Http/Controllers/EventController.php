@@ -35,7 +35,7 @@ class EventController extends Controller
                 Event::create([
                     'amount' => $request->amount2,
                     'category' => $request->category2,
-                    'store_name' => $request->store_name,
+                    'store_name' => $request->storeName,
                     'date' => $request->date,
                     'create_user' => $uid,
                     'update_user' => $uid,
