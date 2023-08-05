@@ -25,6 +25,8 @@ Route::post('login', [LoginController::class, 'login']);
 Route::group(['middleware' => ['firebase']], function () {
     Route::post('events', [EventController::class, 'create']);
     Route::put('events', [EventController::class, 'update']);
+    Route::get('events', [EventController::class, 'get_all']);
+    Route::get('events/{id}', [EventController::class, 'get_one']);
 });
 
 // 初期セットアップ用

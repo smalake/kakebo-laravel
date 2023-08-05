@@ -63,13 +63,14 @@ class EventController extends Controller
     public function update(Request $request)
     {
         try {
-            DB::transaction();
+            DB::beginTransaction();
 
             Event::where('id', $request->id)->update([
-                'category' => $request->category,
                 'amount' => $request->amount,
+                'category' => $request->category,
                 'store_name' => $request->storeName,
-                'update_user' => $request->input('uid')
+                'date' => $request->date,
+                'update_user' => $request->uid
             ]);
             DB::commit();
 
@@ -104,6 +105,7 @@ class EventController extends Controller
                 $carbonCreated = Carbon::parse($item->created_at);
                 $carbonUpdated = Carbon::parse($item->updated_at);
                 $result = array(
+                    'id' => $item->id,
                     'amount' => $item->amount,
                     'category' => $item->category,
                     'storeName' => $item->store_name,
@@ -134,8 +136,35 @@ class EventController extends Controller
         }
     }
 
-    // 全イベントを取得
-    public function get_one(Request $request, $id)
+    // 指定したIDのイベントを取得
+    public function get_one($id)
     {
+        try {
+            $data = Event::where('id', $id)->first();
+            $carbonCreated = Carbon::parse($data->created_at);
+            $carbonUpdated = Carbon::parse($data->updated_at);
+            $result = array(
+                'amount' => $data->amount,
+                'category' => $data->category,
+                'storeName' => $data->store_name,
+                'date' => $data->date,
+                'createUser' => $data->create_user,
+                'updateUser' => $data->update_user,
+                'createdAt' => $carbonCreated->format('Y-m-d H:m:s'),
+                'updatedAt' => $carbonUpdated->format('Y-m-d H:m:s'),
+            );
+            $json = [
+                'data' => $result,
+                'message' => 'All Event Get success!',
+                'error' => ''
+            ];
+            return response()->json($json, Response::HTTP_OK);
+        } catch (Error $e) {
+            $json = [
+                'message' => 'Failed Get to Event',
+                'error' => $e->getMessage()
+            ];
+            return response()->json($json, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

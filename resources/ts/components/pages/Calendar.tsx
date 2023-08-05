@@ -53,7 +53,7 @@ export const Calendar = () => {
         setSelectedDate(arg.dateStr);
     }, []);
     const handleEventClick = useCallback((arg: EventClickArg) => {
-        const date = arg.event.start;
+        const date = arg.event._instance?.range.start;
         if (date != null) {
             const res = format(date, "yyyy-MM-dd");
             setSelectedDate(res);
