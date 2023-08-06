@@ -13,7 +13,7 @@ export const Setting = () => {
         if (res) {
             try {
                 await auth.signOut();
-                removeCookie("kakebo");
+                localStorage.removeItem("kakebo");
                 alert("ログアウトしました");
                 navigate("/login");
             } catch (err) {
