@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DisplayNameController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
@@ -34,4 +35,10 @@ Route::group(['middleware' => ['firebase']], function () {
 Route::group(['middleware' => ['firebase']], function () {
     Route::post('setup', [SetupController::class, 'create']);
     Route::get('setup', [SetupController::class, 'get']);
+});
+
+// setting用
+Route::group(['middleware' => ['firebase']], function () {
+    Route::get('display-name', [DisplayNameController::class, 'get']);
+    Route::put('display-name', [DisplayNameController::class, 'update']);
 });
