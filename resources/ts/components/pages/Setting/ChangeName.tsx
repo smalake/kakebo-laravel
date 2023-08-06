@@ -22,7 +22,7 @@ export const ChangeName = () => {
         const getName = async () => {
             try {
                 const res = await settingApi.getName();
-                setValue("name", res.data["name"]);
+                setValue("name", res.data.data["name"]);
             } catch (err: any) {
                 if (err.status === 401) {
                     alert("認証エラー\n再ログインしてください");
@@ -34,7 +34,7 @@ export const ChangeName = () => {
             }
         };
         getName();
-    });
+    }, []);
 
     const onSubmit = async (data: NameChangeForm) => {
         try {
