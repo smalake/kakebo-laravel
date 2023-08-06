@@ -2,12 +2,10 @@ import React from "react";
 import styles from "./Setting.module.css";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import { auth } from "@/util/firebase";
 
 export const Setting = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie, removeCookie] = useCookies(["kakebo"]);
     const logout = async () => {
         const res = window.confirm("ログアウトしてもよろしいですか？");
         if (res) {
