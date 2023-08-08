@@ -99,28 +99,8 @@ class EventController extends Controller
 
             $data = Event::where('group_id', $data['group_id'])->get();
             // 取得したイベントを日付毎にグルーピング
-            $results = array();
-            foreach ($data as $item) {
-                $carbonDate = Carbon::parse($item->date);
-                $carbonCreated = Carbon::parse($item->created_at);
-                $carbonUpdated = Carbon::parse($item->updated_at);
-                $result = array(
-                    'id' => $item->id,
-                    'amount' => $item->amount,
-                    'category' => $item->category,
-                    'storeName' => $item->store_name,
-                    'date' => $item->date,
-                    'createUser' => $item->create_user,
-                    'updateUser' => $item->update_user,
-                    'createdAt' => $carbonCreated->format('Y-m-d H:m:s'),
-                    'updatedAt' => $carbonUpdated->format('Y-m-d H:m:s'),
-                );
-                if (isset($results[$carbonDate->format('Y-m-d')])) {
-                    array_push($results[$carbonDate->format('Y-m-d')], $result);
-                } else {
-                    $results[$carbonDate->format('Y-m-d')][0] = $result;
-                }
-            }
+            $results = $this->grouping_event($data);
+
             $json = [
                 'data' => $results,
                 'message' => 'All Event Get success!',
@@ -134,6 +114,53 @@ class EventController extends Controller
             ];
             return response()->json($json, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // 取得したイベントを日付毎にグルーピング
+    protected function grouping_event($data)
+    {
+        $events = array();
+        $totals = array();
+        $graphs = array();
+        foreach ($data as $item) {
+            $carbonDate = Carbon::parse($item->date);
+            $carbonCreated = Carbon::parse($item->created_at);
+            $carbonUpdated = Carbon::parse($item->updated_at);
+            $event = array(
+                'id' => $item->id,
+                'amount' => $item->amount,
+                'category' => $item->category,
+                'storeName' => $item->store_name,
+                'date' => $item->date,
+                'createUser' => $item->create_user,
+                'updateUser' => $item->update_user,
+                'createdAt' => $carbonCreated->format('Y-m-d H:m:s'),
+                'updatedAt' => $carbonUpdated->format('Y-m-d H:m:s'),
+            );
+            // イベントを格納
+            if (isset($events[$carbonDate->format('Y-m-d')])) {
+                array_push($events[$carbonDate->format('Y-m-d')], $event);
+            } else {
+                $events[$carbonDate->format('Y-m-d')][0] = $event;
+            }
+
+            // 月ごとの合計
+            if (isset($totals[$carbonDate->format('Y-m')])) {
+                $totals[$carbonDate->format('Y-m')] += $item->amount;
+            } else {
+                $totals[$carbonDate->format('Y-m')] = $item->amount;
+            }
+
+            // グラフ用データ
+            if (isset($graphs[$carbonDate->format('Y-m')])) {
+                $graphs[$carbonDate->format('Y-m')][$item->category] += $item->amount;
+            } else {
+                $graph = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                $graph[$item->category] = $item->amount;
+                $graphs[$carbonDate->format('Y-m')] = $graph;
+            }
+        }
+        return array('event' => $events, 'total' => $totals, 'graph' => $graphs);
     }
 
     // 指定したIDのイベントを取得
