@@ -77,7 +77,7 @@ export const Register = () => {
             const res = await authApi.register(data);
             if (res.status === 200) {
                 localStorage.setItem("kakebo", token);
-                navigate("/event-register");
+                navigate("/loading");
             } else {
                 alert("新規登録に失敗しました");
             }
