@@ -1,7 +1,5 @@
-export interface Graph {
-    name: string;
-    value: number;
-    category: number;
+export interface Graphs {
+    [date: string]: number[];
 }
 
 export interface GraphData {
