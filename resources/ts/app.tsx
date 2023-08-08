@@ -74,7 +74,10 @@ const App = () => {
                                     path="setup-complete"
                                     element={<CreateOK />}
                                 />
-                                <Route path="loading" element={<Loading />} />
+                                <Route
+                                    path="loading/:base"
+                                    element={<Loading />}
+                                />
                             </Route>
                         </Routes>
                     </BrowserRouter>

@@ -30,7 +30,7 @@ export const Calendar = () => {
     useEffect(() => {
         // イベントを取得しているかチェック
         if (check.calendar == 0) {
-            navigate("/loading");
+            navigate("/loading/calendar");
         } else {
             const formattedEvents = [];
             for (const date in events) {

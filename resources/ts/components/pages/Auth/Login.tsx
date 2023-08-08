@@ -75,7 +75,7 @@ export const Login = () => {
             const res = await authApi.login(data);
             if (res.status === 200) {
                 localStorage.setItem("kakebo", token);
-                navigate("/loading");
+                navigate("/event-register");
             } else {
                 console.log(res);
                 alert(
