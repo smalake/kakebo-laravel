@@ -30,7 +30,7 @@ export const Graph = () => {
     useEffect(() => {
         // イベントを取得しているかチェック
         if (check.calendar == 0) {
-            navigate("/loading");
+            navigate("/loading/graph");
         }
     }, []);
 

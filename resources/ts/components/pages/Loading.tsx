@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import { eventAtom } from "@/recoil/EventAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { eventApi } from "@/api/eventApi";
@@ -10,6 +10,7 @@ import { graphAtom } from "@/recoil/GraphAtom";
 import { totalAtom } from "@/recoil/TotalAtom";
 
 export const Loading = () => {
+    const { base } = useParams();
     const navigate = useNavigate();
     const [events, setEvents] = useRecoilState(eventAtom);
     const [graphs, setGraphs] = useRecoilState(graphAtom);
@@ -28,7 +29,6 @@ export const Loading = () => {
             setEvents(res.data.data.event);
             setTotal(res.data.data.total);
             setGraphs(res.data.data.graph);
-            console.log(res.data.data.graph);
             setCheck({
                 ...check,
                 calendar: 1,
@@ -49,7 +49,7 @@ export const Loading = () => {
             await getEvents();
             await sleep(1000);
             setLoading(false);
-            navigate("/event-register");
+            navigate(`/${base}`);
         })();
     }, [loading]);
     return (
