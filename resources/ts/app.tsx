@@ -11,7 +11,6 @@ import { SetupCheck } from "./components/layout/SetupCheck";
 import { NoMenuLayout } from "./components/layout/NoMenuLayout";
 import { EventEdit } from "./components/pages/EventEdit";
 import { MenuLayout } from "./components/layout/MenuLayout";
-import { EventLayout } from "./components/layout/EventLayout";
 import { Calendar } from "./components/pages/Calendar";
 import { Graph } from "./components/pages/Graph";
 import { ChangeName } from "./components/pages/Setting/ChangeName";
@@ -20,7 +19,7 @@ import { Start } from "./components/pages/Setup/Start";
 import { Select } from "./components/pages/Setup/Select";
 import { Create } from "./components/pages/Setup/Create";
 import { CreateOK } from "./components/pages/Setup/CreateOK";
-// import { AxiosClientProvider } from "./api/axiosClientProvider";
+import { Loading } from "./components/pages/Loading";
 
 const App = () => {
     return (
@@ -28,7 +27,6 @@ const App = () => {
             <RecoilRoot>
                 <CookiesProvider>
                     <BrowserRouter>
-                        {/* <AxiosClientProvider> */}
                         <Routes>
                             <Route path="/" element={<AuthLayout />}>
                                 <Route index element={<Login />} />
@@ -51,16 +49,11 @@ const App = () => {
                                         path="event-register"
                                         element={<EventRegister />}
                                     />
-                                    <Route path="/" element={<EventLayout />}>
-                                        <Route
-                                            path="calendar"
-                                            element={<Calendar />}
-                                        />
-                                        <Route
-                                            path="graph"
-                                            element={<Graph />}
-                                        />
-                                    </Route>
+                                    <Route
+                                        path="calendar"
+                                        element={<Calendar />}
+                                    />
+                                    <Route path="graph" element={<Graph />} />
                                     <Route
                                         path="setting"
                                         element={<Setting />}
@@ -81,9 +74,9 @@ const App = () => {
                                     path="setup-complete"
                                     element={<CreateOK />}
                                 />
+                                <Route path="loading" element={<Loading />} />
                             </Route>
                         </Routes>
-                        {/* </AxiosClientProvider> */}
                     </BrowserRouter>
                 </CookiesProvider>
             </RecoilRoot>
