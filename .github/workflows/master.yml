@@ -6,10 +6,11 @@ jobs:
   deploy:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install SSH Key for Deploy
         uses: appleboy/ssh-action@master
         with:
+          node-version: "18"
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.HOST_NAME }}
           username: ${{ secrets.SSH_USER }}
