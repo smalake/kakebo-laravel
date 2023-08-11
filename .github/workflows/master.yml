@@ -10,7 +10,6 @@ jobs:
       - name: Install SSH Key for Deploy
         uses: appleboy/ssh-action@master
         with:
-          node-version: "18"
           key: ${{ secrets.SSH_KEY }}
           host: ${{ secrets.HOST_NAME }}
           username: ${{ secrets.SSH_USER }}
