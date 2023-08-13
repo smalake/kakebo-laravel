@@ -17,5 +17,4 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            pwd
-            sh ./deploy/build.sh
+            sh /var/www/kakebo.smamiya.site/html/kakebo-laravel/deploy/build.sh
