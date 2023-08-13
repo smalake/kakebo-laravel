@@ -1,9 +1,9 @@
-name: CD
+name: CD Dev
 on:
   push:
-    branches: [master]
+    branches: [dev]
   pull_request:
-    branches: [master]
+    branches: [dev]
 jobs:
   deploy:
     runs-on: ubuntu-22.04
@@ -17,7 +17,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /var/www/kakebo.smamiya.site/html/kakebo-laravel
-            git checkout master
+            cd /var/www/kakebo-dev.smamiya.site/html/kakebo-laravel
+            git checkout dev
             git pull
             sh ./deploy/build.sh
