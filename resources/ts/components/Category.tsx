@@ -20,7 +20,6 @@ type CategoryProps = {
 // カテゴリー番号を取得
 export const Category = ({ catNum }: CategoryProps): JSX.Element => {
     const category = useRecoilValue(categoryAtom);
-    const color = category[catNum].color;
     switch (catNum) {
         case 0:
             return (
