@@ -27,7 +27,6 @@ export const MenuLayout = () => {
                     }}
                 >
                     <Box sx={{ flexGrow: 1, width: "max-content" }}>
-                        <ToTop />
                         <Outlet />
                     </Box>
                     <Box sx={{ width: "max-content" }}>
