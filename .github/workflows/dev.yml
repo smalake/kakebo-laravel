@@ -1,9 +1,8 @@
 name: CD Dev
 on:
-  push:
-    branches: [dev]
-  pull_request:
-    branches: [dev]
+  pull_request_target: [dev]
+    types:
+      - closed
 jobs:
   deploy:
     runs-on: ubuntu-22.04
