@@ -17,4 +17,5 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            pwd
             sh ./deploy/build.sh
