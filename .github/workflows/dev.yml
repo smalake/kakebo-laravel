@@ -1,5 +1,7 @@
 name: CD Dev
 on:
+  push:
+    branches: [feature/issue#22]
   pull_request_target:
     branches: [dev]
     types:
