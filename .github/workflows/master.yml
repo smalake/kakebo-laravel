@@ -17,4 +17,4 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            sh ./.github/build.sh
+            sh ./deploy/build.sh
