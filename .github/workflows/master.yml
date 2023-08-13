@@ -17,8 +17,4 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /var/www/kakebo.smamiya.site/html/kakebo-laravel
-            git pull
-            composer install
-            npm install
-            npm run build
+            sh ./.github/build.sh
