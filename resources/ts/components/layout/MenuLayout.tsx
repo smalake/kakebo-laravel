@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import { Outlet, Navigate } from "react-router-dom";
 import { FooterMenu } from "./FooterMenu";
-import { ToTop } from "@/util/ToTop";
 
 export const MenuLayout = () => {
     // const [cookie, setCookie] = useCookies();

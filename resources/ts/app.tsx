@@ -20,7 +20,6 @@ import { Select } from "./components/pages/Setup/Select";
 import { Create } from "./components/pages/Setup/Create";
 import { CreateOK } from "./components/pages/Setup/CreateOK";
 import { Loading } from "./components/pages/Loading";
-import { SrcollToTop } from "./util/SrcollToTop";
 
 const App = () => {
     return (
@@ -46,7 +45,6 @@ const App = () => {
                                     />
                                 </Route>
                                 <Route path="/" element={<MenuLayout />}>
-                                    <SrcollToTop />
                                     <Route
                                         path="event-register"
                                         element={<EventRegister />}
