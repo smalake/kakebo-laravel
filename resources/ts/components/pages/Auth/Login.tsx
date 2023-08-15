@@ -92,7 +92,7 @@ export const Login = () => {
 
     return (
         <div className={styles.container}>
-            <h2>ログインtest</h2>
+            <h2>ログイン</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={styles.form}>
                     <TextField
