@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
     <title>{{ config('app.name', 'app_name') }}</title>
     @viteReactRefresh
     @vite(['resources/ts/app.tsx', 'resources/css/app.css'])
@@ -13,6 +15,19 @@
 
 <body>
     <div id="app"></div>
+    <!-- PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker
+                    .register('./service_worker.js', {
+                        scope: './'
+                    })
+                    .then((reg) => console.log('サービスワーカーの登録成功', reg.scope))
+                    .catch((err) => console.log('サービスワーカーの登録失敗', err));
+            });
+        }
+    </script>
 </body>
 
 </html>
