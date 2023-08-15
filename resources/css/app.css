@@ -19,3 +19,7 @@ h2 {
     font-weight: bold;
     text-align: center;
 }
+
+.MuiBottomNavigation-root > .MuiButtonBase-root {
+    top: -1px;
+}

@@ -19,7 +19,7 @@ export const FooterMenu = () => {
             showLabels
             value={value}
             onChange={handleChange}
-            sx={{ backgroundColor: "#f5f5f5" }}
+            sx={{ backgroundColor: "#f5f5f5", height: "100%" }}
         >
             <BottomNavigationAction
                 label="入力"
