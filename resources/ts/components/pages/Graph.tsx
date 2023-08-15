@@ -1,5 +1,5 @@
 import { Box, Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { PieChart, ResponsiveContainer, Pie, Cell } from "recharts";
 import styles from "./Graph.module.css";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -26,6 +26,11 @@ export const Graph = () => {
             .toString()
             .padStart(2, "0")}`
     );
+
+    // 画面を上までスクロールさせる
+    useLayoutEffect(() => {
+        window.scrollTo(0, 0);
+    });
 
     useEffect(() => {
         // イベントを取得しているかチェック

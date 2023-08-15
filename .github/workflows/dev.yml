@@ -18,6 +18,6 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd /var/www/kakebo-dev.smamiya.site/html/kakebo-laravel
-            git checkout dev
+            git checkout feature/issue#22
             git pull
             sh ./deploy/build.sh
