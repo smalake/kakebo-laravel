@@ -24,9 +24,9 @@ export const MenuLayout = () => {
                     <Box
                         sx={{
                             width: "100%",
-                            height: "36px",
+                            height: "56px",
                             position: "fixed",
-                            bottom: "16px",
+                            bottom: "0",
                         }}
                     >
                         <FooterMenu />
