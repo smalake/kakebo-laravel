@@ -15,12 +15,7 @@ export const FooterMenu = () => {
         navigate(newValue);
     };
     return (
-        <BottomNavigation
-            showLabels
-            value={value}
-            onChange={handleChange}
-            sx={{ backgroundColor: "#f5f5f5" }}
-        >
+        <BottomNavigation showLabels value={value} onChange={handleChange}>
             <BottomNavigationAction
                 label="入力"
                 value="/event-register"

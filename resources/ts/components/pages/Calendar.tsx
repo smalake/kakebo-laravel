@@ -1,9 +1,4 @@
-import React, {
-    useCallback,
-    useEffect,
-    useLayoutEffect,
-    useState,
-} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import jaLocale from "@fullcalendar/core/locales/ja";
@@ -30,11 +25,6 @@ export const Calendar = () => {
             start: string;
         }[]
     >();
-
-    // 画面を上までスクロールさせる
-    useLayoutEffect(() => {
-        window.scrollTo(0, 0);
-    });
 
     // Atomから取得したイベントをカレンダー内に表示させるためのフォーマットへと変換
     useEffect(() => {

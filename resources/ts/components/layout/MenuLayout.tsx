@@ -1,8 +1,11 @@
 import { Box } from "@mui/material";
 import { Outlet, Navigate } from "react-router-dom";
 import { FooterMenu } from "./FooterMenu";
+import { ToTop } from "@/util/ToTop";
 
 export const MenuLayout = () => {
+    // const [cookie, setCookie] = useCookies();
+
     const checkToken = () => {
         if (localStorage.getItem("kakebo")) {
             return localStorage.getItem("kakebo");
@@ -15,20 +18,18 @@ export const MenuLayout = () => {
     return (
         <>
             {checkToken() ? (
-                <Box>
-                    <Box>
-                        <Box sx={{ paddingBottom: "36px" }}>
-                            <Outlet />
-                        </Box>
+                <Box
+                    sx={{
+                        display: "flex",
+                        width: "100%",
+                        position: "absolute",
+                        top: "0",
+                    }}
+                >
+                    <Box sx={{ flexGrow: 1, width: "max-content" }}>
+                        <Outlet />
                     </Box>
-                    <Box
-                        sx={{
-                            width: "100%",
-                            height: "36px",
-                            position: "fixed",
-                            bottom: "16px",
-                        }}
-                    >
+                    <Box sx={{ width: "max-content" }}>
                         <FooterMenu />
                     </Box>
                 </Box>
