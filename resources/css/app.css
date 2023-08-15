@@ -2,12 +2,14 @@
 body {
     font-family: "Arial", sans-serif;
     background-color: #ebebeb !important;
-    display: flex;
-    align-items: center;
+    /* display: flex;
+    align-items: center; */
     margin: 0;
-    width: 390px;
-    height: 844px;
-    overflow: hidden;
+    /* width: 390px; */
+    width: 100%;
+    /* height: 844px; */
+    height: auto;
+    /* overflow: hidden; */
 }
 
 /* タイトル */
@@ -18,20 +20,20 @@ h2 {
     text-align: center;
 }
 
-#root {
+/* #root {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 100%;
     height: 100%;
-}
+} */
 
-.MuiBottomNavigation-root {
+/* .MuiBottomNavigation-root {
     width: 100%;
     position: fixed;
     bottom: 0;
     left: 0;
     height: 36px;
     z-index: 1000;
-}
+} */
