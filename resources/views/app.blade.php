@@ -7,6 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
     <title>{{ config('app.name', 'app_name') }}</title>
     @viteReactRefresh
     @vite(['resources/ts/app.tsx', 'resources/css/app.css'])
