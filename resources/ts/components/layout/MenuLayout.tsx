@@ -17,16 +17,16 @@ export const MenuLayout = () => {
             {checkToken() ? (
                 <Box>
                     <Box>
-                        <Box sx={{ paddingBottom: "36px" }}>
+                        <Box sx={{ paddingBottom: "60px" }}>
                             <Outlet />
                         </Box>
                     </Box>
                     <Box
                         sx={{
                             width: "100%",
-                            height: "36px",
+                            height: "60px",
                             position: "fixed",
-                            bottom: "16px",
+                            bottom: "0",
                         }}
                     >
                         <FooterMenu />
