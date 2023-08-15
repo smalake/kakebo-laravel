@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import styles from "./Setting.module.css";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,12 @@ import { auth } from "@/util/firebase";
 
 export const Setting = () => {
     const navigate = useNavigate();
+
+    // 画面を上までスクロールさせる
+    useLayoutEffect(() => {
+        window.scrollTo(0, 0);
+    });
+
     const logout = async () => {
         const res = window.confirm("ログアウトしてもよろしいですか？");
         if (res) {
