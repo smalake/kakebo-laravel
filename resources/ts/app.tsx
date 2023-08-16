@@ -20,6 +20,7 @@ import { Select } from "./components/pages/Setup/Select";
 import { Create } from "./components/pages/Setup/Create";
 import { CreateOK } from "./components/pages/Setup/CreateOK";
 import { Loading } from "./components/pages/Loading";
+import { InviteGroup } from "./components/pages/Setting/InviteGroup";
 
 const App = () => {
     return (
@@ -42,6 +43,10 @@ const App = () => {
                                     <Route
                                         path="change-name"
                                         element={<ChangeName />}
+                                    />
+                                    <Route
+                                        path="invite-group"
+                                        element={<InviteGroup />}
                                     />
                                 </Route>
                                 <Route path="/" element={<MenuLayout />}>
