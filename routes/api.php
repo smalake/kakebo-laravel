@@ -32,12 +32,6 @@ Route::group(['middleware' => ['firebase']], function () {
     Route::delete('events', [EventController::class, 'delete']);
 });
 
-// 初期セットアップ用
-Route::group(['middleware' => ['firebase']], function () {
-    Route::post('setup', [SetupController::class, 'create']);
-    Route::get('setup', [SetupController::class, 'get']);
-});
-
 // setting用
 Route::group(['middleware' => ['firebase']], function () {
     Route::get('display-name', [DisplayNameController::class, 'get']);
