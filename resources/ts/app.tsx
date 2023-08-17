@@ -15,6 +15,7 @@ import { ChangeName } from "./components/pages/Setting/ChangeName";
 import { Setting } from "./components/pages/Setting/Setting";
 import { Loading } from "./components/pages/Loading";
 import { InviteGroup } from "./components/pages/Setting/InviteGroup";
+import { JoinRegister } from "./components/pages/Auth/JoinRegister";
 
 const App = () => {
     return (
@@ -26,6 +27,10 @@ const App = () => {
                             <Route index element={<Login />} />
                             <Route path="login" element={<Login />} />
                             <Route path="register" element={<Register />} />
+                            <Route
+                                path="join-register/:group"
+                                element={<JoinRegister />}
+                            />
                         </Route>
 
                         <Route path="/" element={<NoMenuLayout />}>

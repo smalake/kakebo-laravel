@@ -19,10 +19,11 @@ class GroupController extends Controller
             $uid = $request->input('uid');
             $data = User::where('uid', $uid)->first();
             $group = $data['group_id'];
+            $encrypt_id = encrypt($group);
 
             // 署名付きURLの生成
             $expire = now()->addMilliseconds(600000); // 有効期限10分
-            $url = URL::temporarySignedRoute('verify.url', $expire, ['group_id' => $group]);
+            $url = URL::temporarySignedRoute('verify.url', $expire, ['group' => $encrypt_id]);
             $json = [
                 'data' => $url,
                 'message' => 'URL generate success!',
@@ -46,10 +47,8 @@ class GroupController extends Controller
         }
 
         // 署名が正当な場合の処理
-        $json = [
-            'message' => 'Verify URL success!',
-            'error' => ''
-        ];
-        return response()->json($json, Response::HTTP_OK);
+        $groupId = $request->query('group');
+
+        return redirect('/join-register/' . $groupId);
     }
 }

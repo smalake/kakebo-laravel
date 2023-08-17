@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('register', [RegisterController::class, 'register']);
+Route::post('join-register', [RegisterController::class, 'join_register']);
 Route::post('login', [LoginController::class, 'login']);
 // Route::middleware('firebase')->get('register', [◯◯Controller::class, '関数名']);
 

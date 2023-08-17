@@ -28,4 +28,23 @@ class RegisterController extends Controller
         ];
         return response()->json($json, Response::HTTP_OK);
     }
+
+    // グループへの参加ユーザの新規登録
+    public function join_register(RegisterRequest $request)
+    {
+        $user = User::create([
+            'uid' => $request->uid,
+            'group_id' => decrypt($request->group),
+            'name' => $request->name,
+            'type' => $request->type,
+        ]);
+
+        //ユーザの作成が完了するとjsonを返す
+        $json = [
+            'data' => $user,
+            'message' => 'User registration success!',
+            'error' => ''
+        ];
+        return response()->json($json, Response::HTTP_OK);
+    }
 }
