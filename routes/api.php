@@ -2,10 +2,9 @@
 
 use App\Http\Controllers\DisplayNameController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\GroupController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\SetupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +36,6 @@ Route::group(['middleware' => ['firebase']], function () {
 Route::group(['middleware' => ['firebase']], function () {
     Route::get('display-name', [DisplayNameController::class, 'get']);
     Route::put('display-name', [DisplayNameController::class, 'update']);
-    Route::get('invite-group', [GroupController::class, 'generate_url']);
+    Route::get('invite-group', [InviteController::class, 'generate_url']);
 });
-Route::get('verify-invite-url', [GroupController::class, 'verify_url'])->name('verify.url');
+Route::get('verify-invite-url', [InviteController::class, 'verify_url'])->name('verify.url');

@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Group;
 use Error;
 use Illuminate\Support\Facades\URL;
 use \Symfony\Component\HttpFoundation\Response;
 
-class GroupController extends Controller
+class InviteController extends Controller
 {
     // 招待用URLを生成
     public function generate_url(Request $request)
