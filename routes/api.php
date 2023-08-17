@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\DisplayNameController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\SetupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('register', [RegisterController::class, 'register']);
+Route::post('join-register', [RegisterController::class, 'join_register']);
 Route::post('login', [LoginController::class, 'login']);
 // Route::middleware('firebase')->get('register', [◯◯Controller::class, '関数名']);
 
@@ -31,14 +32,10 @@ Route::group(['middleware' => ['firebase']], function () {
     Route::delete('events', [EventController::class, 'delete']);
 });
 
-// 初期セットアップ用
-Route::group(['middleware' => ['firebase']], function () {
-    Route::post('setup', [SetupController::class, 'create']);
-    Route::get('setup', [SetupController::class, 'get']);
-});
-
 // setting用
 Route::group(['middleware' => ['firebase']], function () {
     Route::get('display-name', [DisplayNameController::class, 'get']);
     Route::put('display-name', [DisplayNameController::class, 'update']);
+    Route::get('invite-group', [InviteController::class, 'generate_url']);
 });
+Route::get('verify-invite-url', [InviteController::class, 'verify_url'])->name('verify.url');
