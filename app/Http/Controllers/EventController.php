@@ -22,16 +22,16 @@ class EventController extends Controller
             $uid = $request->input('uid');
             $data = User::where('uid', $uid)->first();
 
-            Event::create([
-                'amount' => $request->amount1,
-                'category' => $request->category1,
-                'store_name' => $request->storeName,
-                'date' => $request->date,
-                'create_user' => $uid,
-                'update_user' => $uid,
-                'group_id' => $data['group_id']
-            ]);
             if ($request->amount2 != null) {
+                Event::create([
+                    'amount' => $request->amount1 - $request->amount2,
+                    'category' => $request->category1,
+                    'store_name' => $request->storeName,
+                    'date' => $request->date,
+                    'create_user' => $uid,
+                    'update_user' => $uid,
+                    'group_id' => $data['group_id']
+                ]);
                 Event::create([
                     'amount' => $request->amount2,
                     'category' => $request->category2,
@@ -41,7 +41,18 @@ class EventController extends Controller
                     'update_user' => $uid,
                     'group_id' => $data['group_id']
                 ]);
+            } else {
+                Event::create([
+                    'amount' => $request->amount1,
+                    'category' => $request->category1,
+                    'store_name' => $request->storeName,
+                    'date' => $request->date,
+                    'create_user' => $uid,
+                    'update_user' => $uid,
+                    'group_id' => $data['group_id']
+                ]);
             }
+
             DB::commit();
 
             $json = [
